@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Remote Host (d9a1c6e2-80ca-402c-ab62-099d49888efd)" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="Remote Host (d9a1c6e2-80ca-402c-ab62-099d49888efd)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/jerdos-s/Documents/prog" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
