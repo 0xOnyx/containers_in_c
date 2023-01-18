@@ -3,12 +3,12 @@
 
 int	main(int argc, char **argv)
 {
-	(void)argv;
-	(void)argc;
 	void	*stack;
 
+	(void)argv;
+	(void)argc;
 	stack = create_stack();
-	printf("(parent)\n");
+	printf("(parent) id => %d\n", getpid());
 	clone(&jail, stack, CLONE_NEWUTS | CLONE_NEWPID | SIGCHLD, 0);
 	wait(NULL);
 	return (EXIT_SUCCESS);

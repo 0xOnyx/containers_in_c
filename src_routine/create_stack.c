@@ -2,7 +2,7 @@
 
 #define STACK_SIZE 65536
 
-char *create_stack(void)
+char	*create_stack(void)
 {
 	char	*res;
 

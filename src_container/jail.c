@@ -1,8 +1,8 @@
 #include "container.h"
 
-static int run(char *name)
+static int	run(char *name)
 {
-	char *_arg[] = {name, NULL};
+	char	*_arg[] = {name, NULL};
 
 	return (execvp(name, _arg));
 }
@@ -23,9 +23,10 @@ static void	setup_root(const char *folder)
 int	jail(void *args)
 {
 	(void)args;
-
 	setup_variable();
 	setup_root("./root");
+	mount("proc", "/proc", "proc", 0, 0);
+
 	if (run("bash") == -1)
 	{
 		perror("[ERROR]\t");
