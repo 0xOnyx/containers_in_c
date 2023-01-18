@@ -5,7 +5,11 @@ int	main(int argc, char **argv)
 {
 	(void)argv;
 	(void)argc;
-	printf("(parent)");
-	clone(&jail, create_stack(), SIGCHLD, 0);
-	return (0);
+	void	*stack;
+
+	stack = create_stack();
+	printf("(parent)\n");
+	clone(&jail, stack, CLONE_NEWUTS | CLONE_NEWPID | SIGCHLD, 0);
+	wait(NULL);
+	return (EXIT_SUCCESS);
 }

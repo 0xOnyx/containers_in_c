@@ -1,4 +1,5 @@
 NAME = container
+LINUX = root
 
 COLOR_ESC			= \033
 COLOR_WHITE			= $(COLOR_ESC)[97m
@@ -17,8 +18,8 @@ PATH_CONTAINER		= src_container/
 PATH_OBJ			= objs/
 
 HEADER				= container.h
-SRC_ROUTINE			= main.c
-SRC_CONTAINER		= container.c
+SRC_ROUTINE			= main.c create_stack.c
+SRC_CONTAINER		= jail.c
 
 SRC_ROUTINES		= $(addprefix $(PATH_ROUTINE),$(SRC_ROUTINE))
 SRC_CONTAINERS		= $(addprefix $(PATH_CONTAINER),$(SRC_CONTAINER))
@@ -69,9 +70,14 @@ $(PATH_OBJ)$(PATH_CONTAINER)%.o: $(PATH_CONTAINER)%.c $(HEADERS)
 	@printf "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] COMPILATION $(COLOR_MAGENTA)DEBUG => [%s] $(COLOR_BOLD)CONTAINER\t=>\t$(COLOR_WHITE)%s$(COLOR_RESET)\n" $(DEBUG) $<
 
 
+$(LINUX):
+	mkdir -p root;
+	cd root;
+	curl -OL https://dl-cdn.alpinelinux.org/alpine/v3.17/releases/x86_64/alpine-minirootfs-3.17.1-x86_64.tar.gz
+	tar -xvf alpine-minirootfs-3.17.1-x86_64.tar.gz
+	cd ..;
 
-
-$(NAME)		: $(OBJS)
+$(NAME)		: $(OBJS) $(LINUX)
 	@$(CC) $(CFLAGS) $(OPTIONS) -o $(@) $(OBJS) $(LIBS)
 	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] LINKAGE $(COLOR_BOLD)ALL OBJS FILE =>\n\t $(COLOR_WHITE)$(^:.o=.o\n\t)"
 	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] COMPILATION FINISH !$(COLOR_WHITE)$(COLOR_RESET_BOLD)"
