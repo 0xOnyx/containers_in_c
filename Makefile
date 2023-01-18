@@ -72,10 +72,8 @@ $(PATH_OBJ)$(PATH_CONTAINER)%.o: $(PATH_CONTAINER)%.c $(HEADERS)
 
 $(LINUX):
 	mkdir -p root;
-	cd root;
-	curl -OL https://dl-cdn.alpinelinux.org/alpine/v3.17/releases/x86_64/alpine-minirootfs-3.17.1-x86_64.tar.gz
-	tar -xvf alpine-minirootfs-3.17.1-x86_64.tar.gz
-	cd ..;
+	curl -o alpine.tar.gz -L  https://dl-cdn.alpinelinux.org/alpine/v3.17/releases/x86_64/alpine-minirootfs-3.17.1-x86_64.tar.gz
+	tar -xvf alpine.tar.gz -C ./root/
 
 $(NAME)		: $(OBJS) $(LINUX)
 	@$(CC) $(CFLAGS) $(OPTIONS) -o $(@) $(OBJS) $(LIBS)
@@ -86,12 +84,17 @@ clean		:
 	@$(RM) $(OBJS)
 	@$(RM) $(PATH_OBJ)
 	@make -C $(PATH_MLX) clean
-	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] DELETE $(COLOR_BOLD)ALL OBJS FILE =>\n\t $(COLOR_WHITE)$(OBJS:.o=.o\n\t)"
+	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] DELETE $(COLOR_BOLD)ALL OBJS FILE =>\n\t $(COLOR_WHITE)$(OBJS:.o=.o\n\t)"\
+	@$(RM) alpine.tar.gz
+	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] DELETE $(COLOR_BOLD)ALPINE MINIROOTFS \n $(COLOR_WHITE)"
 	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] CLEAN FINISH !$(COLOR_RESET)"
+
 
 fclean		: clean
 	@$(RM) $(NAME)
 	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] DELETE $(COLOR_BOLD)PROGRAMME =>\n\t $(COLOR_WHITE)$(NAME)"
+	@(RM) root
+	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] DELETE $(COLOR_BOLD)ROOT FOLDER\n"
 	@echo "$(COLOR_GREEN)[$(COLOR_WHITE)INFO$(COLOR_GREEN)] FCLEAN FINISH !$(COLOR_RESET)"
 
 re			: fclean all
