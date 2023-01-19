@@ -1,5 +1,5 @@
 #include "container.h"
-//https://cesarvr.github.io/post/2018-05-22-create-containers/
+//TODO ADD THIS
 //CLONE_IO,CLONE_NEWIPC, CLONE_NEWNET, CLONE_NEWPID, CLONE_NEWUSER,  and  CLONE_NEWUTS.
 
 void	clone_process(int (*func)(void *), int flags, void *arg)
