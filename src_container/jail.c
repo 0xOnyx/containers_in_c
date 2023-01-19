@@ -31,16 +31,11 @@ static void	write_rules(char *path, int value)
 
 	fd = open(path, O_WRONLY | O_APPEND);
 	if (fd == -1)
-	{
-		printf("current path => %s\n", path);
-		perror("[ERROR]\t");
-		exit(EXIT_FAILURE);
-	}
+		return (perror("[ERROR]\t"));
 	if (dprintf(fd, "%d", value) < 0)
 	{
 		close(fd);
 		perror("[ERROR]\t");
-		exit(EXIT_FAILURE);
 	}
 	close(fd);
 }
@@ -50,16 +45,16 @@ static void	limitProcessCreation()
 	int		len;
 	char 	buff[255];
 
-	mkdir(CGROUP_FOLDER, S_IRUSR | S_IWUSR);
-	len = sprintf(buff, "%s%s", CGROUP_FOLDER, "cgroup.procs");
+	mkdir(CGROUP_FOLDER NAME, S_IRUSR | S_IWUSR);
+	len = sprintf(buff, "%s/%s", CGROUP_FOLDER NAME, "cgroup.procs");
 	buff[len] = '\0';
 	write_rules(buff, getpid());
 
-	len = sprintf(buff, "%s%s", CGROUP_FOLDER, "notify_on_release");
+	len = sprintf(buff, "%s/%s", CGROUP_FOLDER NAME, "notify_on_release");
 	buff[len] = '\0';
 	write_rules(buff, 1);
 
-	len = sprintf(buff, "%s%s", CGROUP_FOLDER, "pids.max");
+	len = sprintf(buff, "%s/%s", CGROUP_FOLDER NAME, "pids.max");
 	buff[len] = '\0';
 	write_rules(buff, 5);
 }
